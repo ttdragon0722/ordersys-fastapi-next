@@ -18,7 +18,7 @@ const EditPage = () => {
             setNewData(srcContext.src);
             init = srcContext.init;
         }
-    }, [srcContext,src]);
+    }, [srcContext]);
 
     const handleAdd = (companyName: string) => {
         console.log(companyName);

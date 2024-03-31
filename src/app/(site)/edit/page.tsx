@@ -5,11 +5,13 @@ import { SourceProvider, useSourceContext } from "@/context/sourceData";
 import React, { useEffect, useState } from "react";
 import type { Company } from "@/types/types";
 import InputBlock from '@/components/input/inputBlock';
+import { Block, Header, Item } from './components/blocks';
+import styles from './css/style.module.css';
 
 const EditPage = () => {
     const srcContext = useSourceContext();
     let src: Company[] = [];
-    let init:()=>void;
+    let init: () => void;
     const [newData, setNewData] = useState<Company[]>([]);
 
     useEffect(() => {
@@ -108,54 +110,50 @@ const EditPage = () => {
                     newData.map((company) => {
                         return <div key={v4()} className="text-center my-5">
                             <div className="font-bold ">{company.companyName}</div>
-                            <table className="my-2 table-auto">
-                                <thead className='text-sm font-extrabold text-center'>
-                                    <tr>
-                                        <th>產品名稱</th>
-                                        <th>價錢</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        company.products.map((product, productI) => {
-                                            return <tr key={v4()} className='border-y relative'>
-                                                <td className='py-3'>
-                                                    <InputBlock
-                                                        required={true}
-                                                        onBlur={handleChange}
-                                                        defaultValue={product.name}
-                                                        dataIndex={productI}
-                                                        dataCompanyName={company.companyName}
-                                                        dataSetType="name" type="text" className='text-center' />
-                                                </td>
-                                                <td>
-                                                    <InputBlock
-                                                        required={true}
-                                                        onBlur={handleChange}
-                                                        defaultValue={product.price}
-                                                        dataIndex={productI}
-                                                        dataCompanyName={company.companyName}
-                                                        dataSetType="price" type="number" className='text-center appearance-none' />
-                                                </td>
-                                                <button onClick={handleDelete} data-name={product.name} data-index={productI} data-company-name={company.companyName} className='absolute right-0 h-full'>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                                    </svg>
-                                                </button>
-                                            </tr>
-                                        })
-                                    }
-                                    <tr>
-                                        <td colSpan={2} className='py-3 text-center'>
-                                            <button className='bg-gray-200 rounded-full' onClick={handleClickAdd} data-company-name={company.companyName} >
+                            <div className="my-2 flex-col">
+                                <Header>
+                                    <Item>產品名稱</Item>
+                                    <Item>價錢</Item>
+                                </Header>
+                                {
+                                    company.products.map((product, productI) => {
+                                        return <Block key={v4()}>
+                                            <Item>
+                                                <InputBlock
+                                                    required={true}
+                                                    onBlur={handleChange}
+                                                    defaultValue={product.name}
+                                                    dataIndex={productI}
+                                                    dataCompanyName={company.companyName}
+                                                    dataSetType="name" type="text" className={`text-center w-full ${styles.inputBox}`} />
+                                            </Item>
+                                            <Item>
+                                                <InputBlock
+                                                    required={true}
+                                                    onBlur={handleChange}
+                                                    defaultValue={product.price}
+                                                    dataIndex={productI}
+                                                    dataCompanyName={company.companyName}
+                                                    dataSetType="price" type="number" className={`text-center appearance-none w-1/2 ${styles.inputBox}`} />
+                                            </Item>
+                                            <button onClick={handleDelete} data-name={product.name} data-index={productI} data-company-name={company.companyName} className='absolute right-0 h-full'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                 </svg>
                                             </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </Block>
+                                    })
+                                }
+                                <div className='border-t'>
+                                    <Item>
+                                        <button className='bg-gray-200 rounded-full' onClick={handleClickAdd} data-company-name={company.companyName} >
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            </svg>
+                                        </button>
+                                    </Item>
+                                </div>
+                            </div>
                         </div>
                     })
                 }

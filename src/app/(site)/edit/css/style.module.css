@@ -1,0 +1,28 @@
+.blockCol {
+    display: flex;
+    justify-content: center;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    position: relative;
+}
+
+.header {
+    border-bottom-width: 1px;
+    display: flex;
+    justify-content: center;
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    font-weight: 800;
+    text-align: center;
+}
+
+.item {
+    padding-top: 0.75rem /* 12px */;
+    padding-bottom: 0.75rem /* 12px */;
+    width: 100%;
+}
+
+.inputBox {
+    word-wrap: break-word; /* 兼容舊版的 word-wrap */
+    overflow-wrap: break-word; /* 支持新版的 overflow-wrap */
+}

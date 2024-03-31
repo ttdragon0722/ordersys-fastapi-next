@@ -31,13 +31,15 @@ const Panel = () => {
                     console.log(src.filter(e => e.companyName === companySelect));
 
                     const selectData = src.filter(e => e.companyName === companySelect)[0];
-                    setLoad(selectData);
-                    setTempData(selectData.products.map(() => {
-                        return 0;
-                    }));
-                    gsap.to(panel.current, {
-                        opacity: 1, duration: 0.3, ease: "power1"
-                    });
+                    if (selectData) {
+                        setLoad(selectData);
+                        setTempData(selectData.products.map(() => {
+                            return 0;
+                        }));
+                        gsap.to(panel.current, {
+                            opacity: 1, duration: 0.3, ease: "power1"
+                        });
+                    }
                 }
 
             }

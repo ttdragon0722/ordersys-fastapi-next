@@ -24,7 +24,7 @@ export const useSourceContext = () => {
 
 export const SourceProvider = ({ children }: SourceProviderProp) => {
     const [src, setSrc] = useState<Company[]>([]);
-    const [companySelect, setCompanySelect] = useState<string>("");
+    const [companySelect, setCompanySelect] = useState<string>("DEFAULT");
     const [allCompany, setAllCompany] = useState<string[]>([]);
 
     const init = () => {

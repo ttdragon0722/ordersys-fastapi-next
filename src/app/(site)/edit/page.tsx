@@ -7,6 +7,7 @@ import type { Company } from "@/types/types";
 import InputBlock from '@/components/input/inputBlock';
 import { Block, Header, Item } from './components/blocks';
 import styles from './css/style.module.css';
+import { useRouter } from 'next/navigation';
 
 const EditPage = () => {
     const srcContext = useSourceContext();
@@ -61,7 +62,6 @@ const EditPage = () => {
             })
         });
     }
-
     const handleDelete = (e: React.MouseEvent<HTMLElement>) => {
         const deleteProduct = e.currentTarget.dataset.name as string;
         const deleteProductIdx = parseInt(e.currentTarget.dataset.index as string);
@@ -82,12 +82,10 @@ const EditPage = () => {
             });
         }
     }
-
     const handleClickAdd = (e: React.MouseEvent<HTMLElement>) => {
         const companyName = e.currentTarget.dataset.companyName!;
         handleAdd(companyName);
     }
-
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const userConfirm = confirm("確認儲存");
@@ -100,15 +98,36 @@ const EditPage = () => {
         }
     }
 
+    const [editCompany, setEditCompany] = useState<string>("DEFAULT");
+    const editCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setEditCompany(e.target.value);
+    }
+
+    const router = useRouter();
+    useEffect(() => {
+        router.push(`/edit/#${editCompany}`);
+    }, [editCompany]);
 
     return <SourceProvider>
-        <Container>
-            <h1 className="mt-2 mb-3 font-extrabold">Edit Page</h1>
-            <hr />
-            <form onSubmit={handleSubmit}>
+        <Container id="DEFAULT">
+            <div className='pt-2 px-3 fixed top-0 left-0 font-extrabold flex justify-between items-center bg-gradient-to-b to-transparent bg-slate-50/80 w-full h-[6vh] z-50'>
+                <h1>Edit Page</h1>
+                <select id="compony" value={editCompany} className="select px-5 py-1 rounded-lg font-bold shadow-lg bg-white/50 mx-2"
+                    onChange={editCompanyChange}>
+                    <option value="DEFAULT">選擇廠商</option>
+                    {newData &&
+                        newData.map((value, index) => (
+                            <option key={index} value={value.companyName}>
+                                {value.companyName}
+                            </option>
+                        ))}
+                </select>
+            </div>
+            <form onSubmit={handleSubmit} className='scroll-smooth'>
+                <hr />
                 {
                     newData.map((company) => {
-                        return <div key={v4()} className="text-center my-5">
+                        return <div key={v4()} className="text-center pt-[8vh] my-5" id={company.companyName}>
                             <div className="font-bold ">{company.companyName}</div>
                             <div className="my-2 flex-col">
                                 <Header>

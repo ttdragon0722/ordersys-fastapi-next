@@ -47,7 +47,7 @@ const Panel = () => {
     }, [companySelect]);
 
     return (
-        <div ref={panel} className="flex flex-wrap px-4 py-2 pb-[13vh]">
+        <div ref={panel} className="flex flex-wrap px-4 py-2 pt-[10vh]">
             {load &&
                 load.products.map((v, i) => {
                     return <InputGroup key={v4()} idx={i} value={tempData[i]} setTemp={setTemp} data={v} />

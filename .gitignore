@@ -37,4 +37,5 @@ next-env.d.ts
 
 
 # souce file
-/api/souce/db.json
+/api/source/db.json
+
